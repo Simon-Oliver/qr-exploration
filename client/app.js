@@ -14,7 +14,9 @@ fileSelector.addEventListener('change', event => {
   fetch('http://127.0.0.1:3000/img', {
     method: 'POST',
     body: formData
-  });
+  })
+    .then(res => res.json())
+    .then(data => console.log(data));
 
   // const file = fileSelector.files[0];
   //   console.log('THIS IS WORKING');
