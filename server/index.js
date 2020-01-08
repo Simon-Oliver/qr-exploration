@@ -4,6 +4,7 @@ const multer = require('multer');
 var Jimp = require('jimp');
 var fs = require('fs');
 const jsQR = require('jsqr');
+const Tesseract = require('tesseract.js');
 
 const app = express();
 const port = 3000;
@@ -56,5 +57,16 @@ app.post('/img', upload.single('image'), (req, res, next) => {
     //file removed
   });
 });
+
+
+
+Tesseract.recognize(
+  'https://cdn.ready2order.at/website/production/sites/4/r2o-tse-konformer-kassenbon-2020-beispiel-653x2048.png',
+  'eng',
+  { logger: m => console.log(m) }
+).then(({ data: { text } }) => {
+  console.log(text);
+})
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
