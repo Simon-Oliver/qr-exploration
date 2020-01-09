@@ -9,15 +9,15 @@ const Tesseract = require('tesseract.js');
 const app = express();
 const port = 3000;
 
-app.use(
-  cors({
-    credentials: true,
-    origin: true
-  })
-);
+app.use(cors());
+
+// {
+//   credentials: true,
+//   origin: true
+// }
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -58,15 +58,12 @@ app.post('/img', upload.single('image'), (req, res, next) => {
   });
 });
 
-
-
-Tesseract.recognize(
-  'https://cdn.ready2order.at/website/production/sites/4/r2o-tse-konformer-kassenbon-2020-beispiel-653x2048.png',
-  'eng',
-  { logger: m => console.log(m) }
-).then(({ data: { text } }) => {
-  console.log(text);
-})
-
+// Tesseract.recognize(
+//   'https://cdn.ready2order.at/website/production/sites/4/r2o-tse-konformer-kassenbon-2020-beispiel-653x2048.png',
+//   'eng',
+//   { logger: m => console.log(m) }
+// ).then(({ data: { text } }) => {
+//   console.log(text);
+// })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
